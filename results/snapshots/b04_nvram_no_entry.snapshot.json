@@ -1,0 +1,73 @@
+{
+ "disk": "/dev/loop0",
+ "firmware": "uefi",
+ "partitions": [
+  {
+   "path": "/dev/loop0p1",
+   "number": 1,
+   "parttype": "c12a7328-f81f-11d2-ba4b-00a0c93ec93b",
+   "partuuid": "0f0e0d0c-0000-4000-8000-0000000000e1",
+   "fstype": "vfat",
+   "uuid": "abcd-1234",
+   "label": null
+  },
+  {
+   "path": "/dev/loop0p2",
+   "number": 2,
+   "parttype": "4f68bce3-e8cd-4db1-96e7-fbcaf984b709",
+   "partuuid": "0b8713d3-ae01-426d-a248-f3e9338d9523",
+   "fstype": "ext4",
+   "uuid": "11111111-2222-4333-8444-555555555555",
+   "label": null
+  }
+ ],
+ "filesystems": {
+  "/dev/loop0p1": {
+   "mounted": true,
+   "subvols": [],
+   "files": {
+    "EFI/debian/grub.cfg": "search.fs_uuid 11111111-2222-4333-8444-555555555555 root\nset prefix=($root)/boot/grub\nconfigfile $prefix/grub.cfg\n"
+   },
+   "listing": [
+    "EFI/debian/grub.cfg",
+    "EFI/debian/grubx64.efi",
+    "EFI/debian/shimx64.efi",
+    "efi/debian/grub.cfg",
+    "efi/debian/grubx64.efi",
+    "efi/debian/shimx64.efi"
+   ]
+  },
+  "/dev/loop0p2": {
+   "mounted": true,
+   "subvols": [],
+   "files": {
+    "etc/fstab": "UUID=11111111-2222-4333-8444-555555555555 / ext4 errors=remount-ro 0 1\nUUID=ABCD-1234 /boot/efi vfat umask=0077 0 1\n",
+    "boot/grub/grub.cfg": "set default=0\nsearch --no-floppy --fs-uuid --set=root 11111111-2222-4333-8444-555555555555\nmenuentry 'Debian GNU/Linux' {\n\tsearch --no-floppy --fs-uuid --set=root 11111111-2222-4333-8444-555555555555\n\tlinux\t/boot/vmlinuz-6.12.0-cx9 root=UUID=11111111-2222-4333-8444-555555555555 ro quiet\n\tinitrd\t/boot/initrd.img-6.12.0-cx9\n}\n"
+   },
+   "listing": [
+    "boot/grub/grub.cfg",
+    "boot/initrd.img-6.12.0-cx9",
+    "boot/vmlinuz-6.12.0-cx9"
+   ]
+  }
+ },
+ "lvm": [],
+ "nvram_text": "BootCurrent: 0000\nTimeout: 1 seconds\nBootOrder: 0000\nBoot0000* UiApp\tFvVol(7cb8bdc9-f8eb-4f34-aaea-3ee4af6516a1)/FvFile(462caa21-7614-4503-836e-8ab6f4662331)\n",
+ "table": "gpt",
+ "mbr_has_grub": false,
+ "nvram_source": "archivo imgs/b04_nvram_no_entry.nvram",
+ "commands_run": [
+  "blockdev --getro /dev/loop0",
+  "blockdev --setro /dev/loop0",
+  "sfdisk -J /dev/loop0",
+  "blockdev --getro /dev/loop0p1",
+  "blkid -p -o export /dev/loop0p1",
+  "mount -t vfat -o ro /dev/loop0p1 /run/bootfix-11f3ziko",
+  "blockdev --getro /dev/loop0p2",
+  "blkid -p -o export /dev/loop0p2",
+  "mount -t ext4 -o ro,noload /dev/loop0p2 /run/bootfix-n9y49wxu",
+  "umount /run/bootfix-n9y49wxu",
+  "umount /run/bootfix-11f3ziko",
+  "blockdev --setrw /dev/loop0"
+ ]
+}

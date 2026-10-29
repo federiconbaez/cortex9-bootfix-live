@@ -1,0 +1,272 @@
+{
+  "prereg_sha256": "13c93b56584e45b7d15512e744a9e9cc03c83079cf782684576fea94e0ac6bc8",
+  "summary": {
+    "diagnosis_correct_broken": "10/10",
+    "controls_without_error": "3/3",
+    "sha256_identical": "13/13",
+    "sectors_written_total": 0,
+    "instrument_control": {
+      "sha256_changed": true,
+      "sectors_written": 320
+    }
+  },
+  "rows": [
+    {
+      "name": "c1_healthy_uefi",
+      "expect": "none",
+      "top": "none",
+      "errors": [],
+      "correct": true,
+      "sha256_before": "aeb1bb40257faeb726a29b7aa59c133be93bab7750ed5224cc55e027b989d73b",
+      "sha256_after": "aeb1bb40257faeb726a29b7aa59c133be93bab7750ed5224cc55e027b989d73b",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 95.6,
+      "rc": 0
+    },
+    {
+      "name": "c2_healthy_bios",
+      "expect": "none",
+      "top": "none",
+      "errors": [],
+      "correct": true,
+      "sha256_before": "b0a5f2dd124e815650f2ce468d4b7da7cdab9f421b935552f448decb407d6281",
+      "sha256_after": "b0a5f2dd124e815650f2ce468d4b7da7cdab9f421b935552f448decb407d6281",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0
+      },
+      "ms": 66.5,
+      "rc": 0
+    },
+    {
+      "name": "c3_healthy_luks",
+      "expect": "none",
+      "top": "none",
+      "errors": [],
+      "correct": true,
+      "sha256_before": "b65f3b7eb107e5edf067d991dcce48a70ce06846fbd2012a70d56c5e63206d8e",
+      "sha256_after": "b65f3b7eb107e5edf067d991dcce48a70ce06846fbd2012a70d56c5e63206d8e",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0,
+        "loop0p3": 0
+      },
+      "ms": 87.2,
+      "rc": 0
+    },
+    {
+      "name": "b01_fstab_root_uuid",
+      "expect": "fstab.root_uuid_missing",
+      "top": "fstab.root_uuid_missing",
+      "errors": [
+        "fstab.root_uuid_missing"
+      ],
+      "correct": true,
+      "sha256_before": "525a4087a4cd1a7dd7ad19d4a188e5784b0b6e89d8bda8905e148f9fac15ae84",
+      "sha256_after": "525a4087a4cd1a7dd7ad19d4a188e5784b0b6e89d8bda8905e148f9fac15ae84",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 83.3,
+      "rc": 1
+    },
+    {
+      "name": "b02_grub_root_uuid",
+      "expect": "grub.root_uuid_missing",
+      "top": "grub.root_uuid_missing",
+      "errors": [
+        "grub.root_uuid_missing",
+        "grub.root_uuid_missing"
+      ],
+      "correct": true,
+      "sha256_before": "5d2aedb45e7f1c91fb98ccaff2c4a64a86470d18d67c956a328450bc3dd50b25",
+      "sha256_after": "5d2aedb45e7f1c91fb98ccaff2c4a64a86470d18d67c956a328450bc3dd50b25",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 83.3,
+      "rc": 1
+    },
+    {
+      "name": "b03_grub_cfg_missing",
+      "expect": "grub.cfg_missing",
+      "top": "grub.cfg_missing",
+      "errors": [
+        "grub.cfg_missing"
+      ],
+      "correct": true,
+      "sha256_before": "26d852a6dfb4ba5911024a4e73d5252ec88bdda251a2b403b0ffbb0d29fee45b",
+      "sha256_after": "26d852a6dfb4ba5911024a4e73d5252ec88bdda251a2b403b0ffbb0d29fee45b",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 83.0,
+      "rc": 1
+    },
+    {
+      "name": "b04_nvram_no_entry",
+      "expect": "uefi.no_boot_entry",
+      "top": "uefi.no_boot_entry",
+      "errors": [
+        "uefi.no_boot_entry"
+      ],
+      "correct": true,
+      "sha256_before": "86a8c9df7da60c109b0aa3b4ab5d5aaa11b13a6fe93f4497c16832aaf13c53b9",
+      "sha256_after": "86a8c9df7da60c109b0aa3b4ab5d5aaa11b13a6fe93f4497c16832aaf13c53b9",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 83.1,
+      "rc": 1
+    },
+    {
+      "name": "b05_esp_loader_missing",
+      "expect": "uefi.loader_missing",
+      "top": "uefi.loader_missing",
+      "errors": [
+        "uefi.loader_missing"
+      ],
+      "correct": true,
+      "sha256_before": "42393dc7a808b1b69a03cd7c5ee3e5cc97a1240dafc1f53730c47634763c0bc1",
+      "sha256_after": "42393dc7a808b1b69a03cd7c5ee3e5cc97a1240dafc1f53730c47634763c0bc1",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 84.5,
+      "rc": 1
+    },
+    {
+      "name": "b06_esp_not_in_fstab",
+      "expect": "fstab.esp_missing",
+      "top": "fstab.esp_missing",
+      "errors": [
+        "fstab.esp_missing"
+      ],
+      "correct": true,
+      "sha256_before": "e1747dc92ecaf0edd0356104ddb7441fdd56f280c1c22d479c6b70ccdbd84ebb",
+      "sha256_after": "e1747dc92ecaf0edd0356104ddb7441fdd56f280c1c22d479c6b70ccdbd84ebb",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 84.9,
+      "rc": 1
+    },
+    {
+      "name": "b07_bios_mbr_no_grub",
+      "expect": "bios.mbr_no_grub",
+      "top": "bios.mbr_no_grub",
+      "errors": [
+        "bios.mbr_no_grub"
+      ],
+      "correct": true,
+      "sha256_before": "6c4ba93a5b945b0927d1cf933a98da5dbb9c1d0a309a379d23f24d84fdbd189c",
+      "sha256_after": "6c4ba93a5b945b0927d1cf933a98da5dbb9c1d0a309a379d23f24d84fdbd189c",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0
+      },
+      "ms": 65.4,
+      "rc": 1
+    },
+    {
+      "name": "b08_luks_uuid_mismatch",
+      "expect": "luks.uuid_mismatch",
+      "top": "luks.uuid_mismatch",
+      "errors": [
+        "luks.uuid_mismatch"
+      ],
+      "correct": true,
+      "sha256_before": "a723b86a5a2cb4702fdf06c943143342414487f50aa1688c20f776a4fcacbcff",
+      "sha256_after": "a723b86a5a2cb4702fdf06c943143342414487f50aa1688c20f776a4fcacbcff",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0,
+        "loop0p3": 0
+      },
+      "ms": 87.2,
+      "rc": 1
+    },
+    {
+      "name": "b09_btrfs_subvol_missing",
+      "expect": "btrfs.subvol_missing",
+      "top": "btrfs.subvol_missing",
+      "errors": [
+        "btrfs.subvol_missing"
+      ],
+      "correct": true,
+      "sha256_before": "1dd863fad39250913f7bbea94dbcf3ef7634131f104d9231643b878a20a4bacd",
+      "sha256_after": "1dd863fad39250913f7bbea94dbcf3ef7634131f104d9231643b878a20a4bacd",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0
+      },
+      "ms": 88.1,
+      "rc": 1
+    },
+    {
+      "name": "b10_lvm_lv_missing",
+      "expect": "lvm.lv_missing",
+      "top": "lvm.lv_missing",
+      "errors": [
+        "lvm.lv_missing"
+      ],
+      "correct": true,
+      "sha256_before": "2828993456be9a2f53d36ccc84761f069fa98a8cfbbb0ffc607f862f54db72ef",
+      "sha256_after": "2828993456be9a2f53d36ccc84761f069fa98a8cfbbb0ffc607f862f54db72ef",
+      "sha256_identical": true,
+      "sectors_written": 0,
+      "sectors_written_by_dev": {
+        "loop0": 0,
+        "loop0p1": 0,
+        "loop0p2": 0,
+        "loop0p3": 0
+      },
+      "ms": 106.5,
+      "rc": 1
+    }
+  ],
+  "kernel": "7.0.0-1017-azure"
+}
