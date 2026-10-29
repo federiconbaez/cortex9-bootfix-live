@@ -85,6 +85,35 @@ def main() -> int:
         print(f"{sc['name']:26s} esperado={sc['expect']:24s} top={top:24s} "
               f"{'OK' if correct else 'NO'} sha256={'igual' if row['sha256_identical'] else 'DISTINTO'} "
               f"sectores_escritos={row['sectors_written']} {row['ms']} ms")
+    # control positivo del instrumento: un montaje rw de verdad TIENE que verse en sha256 y en
+    # /sys/block/*/stat; si no, "0 bytes escritos" no probaría nada.
+    import shutil
+    import tempfile
+    src = os.path.join(a.imgdir, prereg["scenarios"][0]["name"] + ".img")
+    ctl_img = os.path.join(a.imgdir, "instrument-control.img")
+    shutil.copyfile(src, ctl_img)
+    before = sha256(ctl_img)
+    dev = subprocess.run(["losetup", "-fP", "--show", ctl_img], capture_output=True, text=True,
+                         check=True).stdout.strip()
+    subprocess.run(["udevadm", "settle"], check=False)
+    time.sleep(0.5)
+    w0 = sectors_written(dev)
+    mnt = tempfile.mkdtemp(prefix="ctl-", dir=a.imgdir)
+    subprocess.run(["mount", f"{dev}p2", mnt], check=True)
+    with open(os.path.join(mnt, "escritura-de-control"), "w") as fh:
+        fh.write("x\n")
+    subprocess.run(["umount", mnt], check=True)
+    subprocess.run(["sync"], check=False)
+    w1 = sectors_written(dev)
+    subprocess.run(["losetup", "-d", dev], check=True)
+    after = sha256(ctl_img)
+    os.rmdir(mnt)
+    os.remove(ctl_img)
+    ctl_sectors = sum(w1.get(k, 0) - w0.get(k, 0) for k in w1)
+    instrument = {"sha256_changed": before != after, "sectors_written": ctl_sectors}
+    print(f"control del instrumento (mount rw + 1 archivo): sha256 {'cambió' if before != after else 'IGUAL'}, "
+          f"sectores escritos {ctl_sectors}")
+
     broken = [r for r in rows if r["expect"] != "none"]
     ctl = [r for r in rows if r["expect"] == "none"]
     summary = {
@@ -92,6 +121,7 @@ def main() -> int:
         "controls_without_error": f"{sum(r['correct'] for r in ctl)}/{len(ctl)}",
         "sha256_identical": f"{sum(r['sha256_identical'] for r in rows)}/{len(rows)}",
         "sectors_written_total": sum(r["sectors_written"] for r in rows),
+        "instrument_control": instrument,
     }
     print(json.dumps(summary, ensure_ascii=False))
     if a.out:
@@ -107,6 +137,8 @@ def main() -> int:
         fails.append("sha256_identical")
     if summary["sectors_written_total"] != 0:
         fails.append("sectors_written")
+    if not (instrument["sha256_changed"] and instrument["sectors_written"] > 0):
+        fails.append("instrument_control (medición de escrituras insensible)")
     if fails:
         print("UMBRAL NO CUMPLIDO:", ", ".join(fails))
         return 1
