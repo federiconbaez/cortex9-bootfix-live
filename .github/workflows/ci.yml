@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tests sin root (un test salteado hace fallar el job)
+        run: python3 -m tests.run
+
+  lab-readonly:
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Herramientas del laboratorio
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gdisk dosfstools mtools btrfs-progs cryptsetup-bin lvm2 grub-pc-bin e2fsprogs
+      - name: Construir las 13 imágenes (root)
+        run: sudo lab/make_images.sh imgs
+      - name: Medición pre-registrada (root, loop en lectura-escritura)
+        run: sudo /usr/bin/python3 -m lab.measure imgs --out results-ci.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results
+          path: |
+            results-ci.json
+            imgs/*.snapshot.json
+          if-no-files-found: error

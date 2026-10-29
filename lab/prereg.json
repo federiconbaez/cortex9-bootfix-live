@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "description": "Pre-registro de bootfix-live (día-MVP: diagnóstico solo-lectura). Se versiona antes de la primera medición. Las imágenes las arma lab/make_images.sh.",
+  "scenarios": [
+    {"name": "c1_healthy_uefi",          "firmware": "uefi", "expect": "none"},
+    {"name": "c2_healthy_bios",          "firmware": "bios", "expect": "none"},
+    {"name": "c3_healthy_luks",          "firmware": "uefi", "expect": "none"},
+    {"name": "b01_fstab_root_uuid",      "firmware": "uefi", "expect": "fstab.root_uuid_missing"},
+    {"name": "b02_grub_root_uuid",       "firmware": "uefi", "expect": "grub.root_uuid_missing"},
+    {"name": "b03_grub_cfg_missing",     "firmware": "uefi", "expect": "grub.cfg_missing"},
+    {"name": "b04_nvram_no_entry",       "firmware": "uefi", "expect": "uefi.no_boot_entry"},
+    {"name": "b05_esp_loader_missing",   "firmware": "uefi", "expect": "uefi.loader_missing"},
+    {"name": "b06_esp_not_in_fstab",     "firmware": "uefi", "expect": "fstab.esp_missing"},
+    {"name": "b07_bios_mbr_no_grub",     "firmware": "bios", "expect": "bios.mbr_no_grub"},
+    {"name": "b08_luks_uuid_mismatch",   "firmware": "uefi", "expect": "luks.uuid_mismatch"},
+    {"name": "b09_btrfs_subvol_missing", "firmware": "uefi", "expect": "btrfs.subvol_missing"},
+    {"name": "b10_lvm_lv_missing",       "firmware": "uefi", "expect": "lvm.lv_missing"}
+  ],
+  "correct": "La causa probable (primer error del ranking) es exactamente 'expect'. En los controles ('none') no puede haber ningún error.",
+  "readonly": "Para cada imagen: sha256 del archivo antes de losetup y después de losetup -d, y sectores escritos (campo 7 de /sys/block/<dev>/stat) del loop y de cada partición antes y después de 'bootfix diagnose'. El loop se adjunta en lectura-escritura: la protección tiene que venir de bootfix, no de losetup -r.",
+  "thresholds": {
+    "diagnosis_correct_broken": ">= 9/10",
+    "controls_without_error": "3/3",
+    "sha256_identical": "13/13",
+    "sectors_written_during_diagnose": "0 en todas las imágenes"
+  },
+  "not_measured_today": "Arranque hasta login tras aplicar el plan (>= 8/10 en la idea original): requiere la matriz QEMU/OVMF y no se mide en este MVP. NVRAM simulada: el loop no tiene NVRAM, se pasa un archivo con salida de efibootmgr -v."
+}
